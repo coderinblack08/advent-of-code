@@ -73,14 +73,20 @@ function sum_board(i) {
   return sum;
 }
 
-outerloop: for (const number of numbers) {
+let last_ans = 0;
+
+const won = new Set();
+
+for (const number of numbers) {
   for (let i = 0; i < boards.length; i++) {
     if (number in contents[i]) {
       claimed[i].add(number);
-      if (check_board(i)) {
-        console.log(sum_board(i) * number);
-        break outerloop;
+      if (check_board(i) && !won.has(i)) {
+        last_ans = sum_board(i) * number;
+        won.add(i);
       }
     }
   }
 }
+
+console.log(last_ans);
